@@ -5,16 +5,7 @@ require 'bank'
 
 describe Razorpay::IFSC::IFSC do
   let(:mocked_response) do
-    {
-      'BANK' => 'Kotak Mahindra Bank',
-      'IFSC' => 'KKBK0000261',
-      'BRANCH' => 'GURGAON',
-      'ADDRESS' => 'JMD REGENT SQUARE,MEHRAULI GURGAON ROAD,OPPOSITE BRISTOL HOTEL,',
-      'CONTACT' => '4131000',
-      'CITY' => 'GURGAON',
-      'DISTRICT' => 'GURGAON',
-      'STATE' => 'HARYAN'
-    }
+    JSON.parse(File.read 'tests/fixture/HDFC0CAGSBK.json')
   end
   let(:dummy_code) { 'foo' }
   let(:code_double) { double('code double') }
@@ -36,6 +27,13 @@ describe Razorpay::IFSC::IFSC do
       expect(fetched_code.city).to eq mocked_response['CITY']
       expect(fetched_code.district).to eq mocked_response['DISTRICT']
       expect(fetched_code.state).to eq mocked_response['STATE']
+      expect(fetched_code.centre).to eq mocked_response['CENTRE']
+      expect(fetched_code.micr).to eq mocked_response['MICR']
+      expect(fetched_code.upi).to eq mocked_response['UPI']
+      expect(fetched_code.imps).to eq mocked_response['IMPS']
+      expect(fetched_code.neft).to eq mocked_response['NEFT']
+      expect(fetched_code.rtgs).to eq mocked_response['RTGS']
+      expect(fetched_code.swift).to eq mocked_response['SWIFT']
     end
 
     it 'should set @valid to true and skip local validation' do
@@ -77,7 +75,6 @@ describe Razorpay::IFSC::IFSC do
       end
 
       it 'should return the correct sublet bank name for custom sublets' do
-        expect(described_class.bank_name_for('VIJB0SSB001')).to eq 'Shimsha Sahakara Bank Niyamitha'
         expect(described_class.bank_name_for('KSCB0006001')).to eq 'Tumkur District Central Bank'
         expect(described_class.bank_name_for('WBSC0KPCB01')).to eq 'Kolkata Police Co-operative Bank'
         expect(described_class.bank_name_for('YESB0ADB002')).to eq 'Amravati District Central Co-operative Bank'

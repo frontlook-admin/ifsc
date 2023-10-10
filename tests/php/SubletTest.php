@@ -32,7 +32,7 @@ class SubletTest extends TestCase
         // Since some of the Banks in the NPCI ACH list have sublets
         // Belonging to themselves. Skipped till we figure out a better way
         // Reported to RBI, no response yet
-        $this->markTestSkipped();
+        $this->markTestSkipped('Some banks are their own sublets, so this test is skipped for now');
         foreach ($this->sublets as $ifsc => $bankCode)
         {
             // This would be the naive owner
@@ -49,8 +49,6 @@ class SubletTest extends TestCase
     public function testCustomSublet()
     {
         $data = [
-            // Test a complete 11 character prefix
-            "VIJB0SSB001" => "Shimsha Sahakara Bank Niyamitha",
             // A 8 character prefix pointing to a bank code
             "KSCB0006001" => "Tumkur District Central Bank",
             // A 9 character prefix pointing to a static name

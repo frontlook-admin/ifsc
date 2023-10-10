@@ -4,42 +4,51 @@ This is part of the IFSC toolset released by Razorpay.
 You can find more details about the entire release at
 [ifsc.razorpay.com](https://ifsc.razorpay.com).
 
-[![wercker status](https://app.wercker.com/status/bc9b22047e1b8eb55ce98ba451d7b504/s/master 'wercker status')](https://app.wercker.com/project/byKey/bc9b22047e1b8eb55ce98ba451d7b504) [![](https://images.microbadger.com/badges/image/razorpay/ifsc:1.5.9.svg)](https://microbadger.com/images/razorpay/ifsc:1.5.9) [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](https://opensource.org/licenses/MIT) [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg?style=flat-square)](http://makeapullrequest.com)
-
-[![](https://images.microbadger.com/badges/version/razorpay/ifsc:1.5.9.svg)](https://microbadger.com/images/razorpay/ifsc:1.5.9) [![npm version](https://badge.fury.io/js/ifsc.svg)](https://badge.fury.io/js/ifsc) [![Gem Version](https://badge.fury.io/rb/ifsc.svg)](https://badge.fury.io/rb/ifsc) [![PHP version](https://badge.fury.io/ph/razorpay%2Fifsc.svg)](https://badge.fury.io/ph/razorpay%2Fifsc) [![Hex pm](http://img.shields.io/hexpm/v/ifsc.svg)](https://hex.pm/packages/ifsc)
+![Docker Image Version (latest semver)](https://img.shields.io/docker/v/razorpay/ifsc) [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](https://opensource.org/licenses/MIT) [![npm version](https://badge.fury.io/js/ifsc.svg)](https://badge.fury.io/js/ifsc) [![Gem Version](https://badge.fury.io/rb/ifsc.svg)](https://badge.fury.io/rb/ifsc) [![PHP version](https://badge.fury.io/ph/razorpay%2Fifsc.svg)](https://badge.fury.io/ph/razorpay%2Fifsc)
 
 ## Dataset
 
-If you are just looking for the dataset, go to
-the [releases][releases] section and download
-the latest release.
+If you are just looking for the dataset, go to the [releases][releases] section and download the latest release.
 
-The latest [`build` pipeline][buildlist] on Wercker should result in a container
-with the complete dataset as well.
+The latest `scraper` workflow on GitHub should publish a `release-artifact` as well.
 
 ### Source
 
-The source for the dataset are the following files:
+Various official sources are linked below, with the ones currently used marked with a †
 
--  List of NEFT IFSCs from [RBI website][combined]
--  List of RTGS IFSCs from [RBI website][rtgs]
--  List of ACH Live Banks from [NPCI website][ach] used for IFSC sublet branches
+-  List of NEFT IFSCs from [RBI website][combined]†
+-  List of RTGS IFSCs from [RBI website][rtgs]†
+-  RBI maintains several lists:
+  - [List of banks in India](https://www.rbi.org.in/commonman/english/scripts/banksinindia.aspx)
+  - [Websites of banks in India](https://www.rbi.org.in/scripts/banklinks.aspx).
+  - [Bankwise Volumes in ECS/NEFT/RTGS/Mobile](https://www.rbi.org.in/Scripts/NEFTUserView.aspx?Id=166)
+  - [List of Banks permitted to provide Mobile Banking](https://www.rbi.org.in/Scripts/bs_viewcontent.aspx?Id=2463)
+- NPCI website has several lists:
+  - [NACH Live Members][ach]†
+  - [RuPay Live Members](https://www.npci.org.in/what-we-do/rupay/live-members)
+  - [IMPS Live members](https://www.npci.org.in/what-we-do/imps/live-members)
+  - [Banks and Apps live on AutoPay](https://www.npci.org.in/what-we-do/autopay/list-of-banks-and-apps-live-on-autopay)
+  - [Sub member banks IFSC and MICR Codes](https://www.npci.org.in/PDF/npci/ifsc-and-micr-codes/Submember-banks-IFSC-and-MICR.xlsx)
+  - [Merged banks IFSC and MICR Codes](https://www.npci.org.in/PDF/npci/ifsc-and-micr-codes/Merged-banks-IFSC-and-MICR.xlsx)
+  - [Routing codes used in API E-Mandates](https://www.npci.org.in/PDF/nach/live-members-e-mandates/Routing%20codes%20to%20be%20used%20in%20API%20E-Mandates_11_7_19.pdf)
+  - [Merged Banks on NACH](https://www.npci.org.in/what-we-do/nach/live-members/merged-banks)
+  - [Blocked Banks on NACH](https://www.npci.org.in/what-we-do/nach/live-members/blocked-banks)
 
 #### SWIFT
 
 SWIFT/BIC codes are supported for a few banks.
 
 ##### SBI
--  https://sbi.co.in/web/nri/quick-links/swift-codes
--  https://sbi.co.in/documents/16012/263663/sbinri_merged_bran_swfcodet.xlsx
+-  https://sbi.co.in/web/nri/quick-links/swift-codes †
+-  https://sbi.co.in/documents/16012/263663/sbinri_merged_bran_swfcodet.xlsx †
 -  Branch codes from above are checked against the [SBI Branch Locator](https://www.sbi.co.in/web/home/locator/branch) to get the IFSC.
 
 ##### PNB
-- https://pnbindia.com/downloadprocess.aspx?fid=Zb7ImdUNlz9Ge73qn1nXQg==
-- https://www.pnbindia.in/document/PNB-helpdesk/bic_code.pdf
+- https://pnbindia.com/downloadprocess.aspx?fid=Zb7ImdUNlz9Ge73qn1nXQg== †
+- https://www.pnbindia.in/document/PNB-helpdesk/bic_code.pdf †
 
 ##### HDFC
-- https://www.hdfcbank.com/nri-banking/correspondent-banks
+- https://www.hdfcbank.com/nri-banking/correspondent-banks †
 
 ## Installation
 
@@ -77,11 +86,29 @@ require "ifsc"
 
 The PHP package has a dependency on the virtual package `php-http/client-implementation` which requires you to install an adapter, but we do not care which one. That is an implementation detail in your application. You do not have to use the `php-http/curl-client` if you do not want to. You may use the `php-http/guzzle6-adapter`. Read more about the virtual packages, why this is a good idea and about the flexibility it brings at the [HTTPlug docs](http://docs.php-http.org/en/latest/httplug/users.html). You can find a list of suported providers on [packagist](https://packagist.org/providers/php-http/client-implementation).
 
-The minimum [PHP version supported is 7.2](https://endoflife.date/php).
+The minimum [PHP version supported is 7.3](https://endoflife.date/php). The package can be installed on PHP>=7.1 however.
 
 ## Node.js
 
 `$ npm install ifsc`
+
+## Go
+
+This package is compatible with modern Go releases in module mode, with Go installed:
+
+`go get github.com/razorpay/ifsc/v2`
+
+will resolve and add the package to the current development module, along with its dependencies.
+
+Alternatively the same can be achieved if you use import in a package:
+
+`import "github.com/razorpay/ifsc/v2/src/go"`
+
+and run go get without parameters.
+
+Finally, to use the top-of-trunk version of this repo, use the following command:
+
+`go get github.com/razorpay/ifsc/v2@master`
 
 ## Support Matrix
 
@@ -91,12 +118,12 @@ Only the latest version of each SDK is considered.
 | -------- | ---------- | ---------- | ----------------------- | -------------- |
 | PHP      | ✅         | ✅         | ✅ (✅)                 | ✅             |
 | Ruby     | ✅         | ✅         | ✅ (✅)                 | ✅             |
-| Elixir   | ✅         | ✅         | ✅ (❎)                 | ❎             |
 | Node.js  | ✅         | ✅         | ❎ (❎)                 | ✅             |
+| Go       | ✅         | ✅         | ✅ (✅)                 | ✅             |
 
 ## API Documentation
 
-This repository also hosts the source code for 3 modules: PHP/Node.js/Ruby as of now.
+This repository also hosts the source code for 5 modules: PHP/Node.js/Ruby/Go as of now.
 The API is documented below:
 
 ### PHP
@@ -143,13 +170,20 @@ $res = $client->lookupIFSC('KKBK0000261');
 
 echo $res->bank; // 'KOTAK MAHINDRA BANK LIMITED'
 echo $res->branch; // 'GURGAON'
-echo $res->address; // 'JMD REGENT SQUARE,MEHRAULI GURGAON ROAD,OPPOSITE BRISTOL HOTEL,'
+echo $res->address; // 'KOTAK MAHINDRA BANK LTD. UNIT NO. 8&9, SEWA CORPORATE PARK, MG ROAD, REVENUE STATE OF SARHAUL TEHSIL, DISTT,- GURGAON- 122001'
 echo $res->contact; // '4131000'
 echo $res->city; // 'GURGAON'
 echo $res->district; // 'GURGAON'
 echo $res->state; // 'HARYANA'
+echo $res->centre; // 'GURGAON'
 echo $res->getBankCode(); // KKBK
 echo $res->getBankName(); // 'Kotak Mahindra Bank'
+echo $res->micr; // '110485003'
+// Boolean fields: $res->upi, $res->rtgs, $res->neft, res->imps
+
+// You will get a SWIFT code where possible:
+
+echo $client->lookupIFSC('https://ifsc.razorpay.com/HDFC0CAGSBK')->swift; // 'HDFCINBB'
 
 // lookupIFSC may throw `Razorpay\IFSC\Exception\ServerError`
 // in case of server not responding in time
@@ -167,6 +201,24 @@ ifsc.validate('BOTM0XEEMRA'); // returns false
 
 ifsc.fetchDetails('KKBK0000261').then(function(res) {
    console.log(res);
+    // {
+    //   MICR: '560226263',
+    //   BRANCH: 'THE AGS EMPLOYEES COOP BANK LTD',
+    //   ADDRESS: 'SANGMESH BIRADAR BANGALORE',
+    //   STATE: 'KARNATAKA',
+    //   CONTACT: '+91802265658',
+    //   UPI: true,
+    //   RTGS: true,
+    //   CITY: 'BANGALORE',
+    //   CENTRE: 'BANGALORE URBAN',
+    //   DISTRICT: 'BANGALORE URBAN',
+    //   NEFT: true,
+    //   IMPS: true,
+    //   SWIFT: 'HDFCINBB',
+    //   BANK: 'HDFC Bank',
+    //   BANKCODE: 'HDFC',
+    //   IFSC: 'HDFC0CAGSBK'
+    // }
 });
 
 console.log(ifsc.bank.PUNB); // prints PUNB
@@ -235,7 +287,7 @@ code.bank
 code.branch
 # => "GURGAON"
 code.address
-# => "JMD REGENT SQUARE,MEHRAULI GURGAON ROAD,OPPOSITE BRISTOL HOTEL,"
+# => "KOTAK MAHINDRA BANK LTD. UNIT NO. 8&9, SEWA CORPORATE PARK, MG ROAD, REVENUE STATE OF SARHAUL TEHSIL, DISTT,- GURGAON- 122001"
 code.contact
 # => "4131000"
 code.city
@@ -244,6 +296,19 @@ code.district
 # => "GURGAON"
 code.state
 # => "HARYANA"
+code.centre
+# => GURGAON
+code.neft
+# => true
+code.upi
+# => true
+code.imps
+# => true
+code.rtgs
+# => true
+code.swift
+# => ""
+
 ```
 
 #### Sublet Branches
@@ -279,58 +344,69 @@ Razorpay::IFSC::IFSC.find '...'
 code = Razorpay::IFSC::IFSC.new '...'; code.get
 ```
 
-### Elixir
+### Go
 
-Documentation: [https://hexdocs.pm/ifsc](https://hexdocs.pm/ifsc)
+```go
+package main
 
-Online validation
+import (
+	ifsc "github.com/razorpay/ifsc/v2/src/go"
+)
 
-```elixir
-iex> IFSC.get("KKBK0000261")
-{:ok,
- %Razorpay.IFSC{
-   address: "JMD REGENT SQUARE,MEHRAULI GURGAON ROAD,OPPOSITE BRISTOL HOTEL,",
-   bank: "Kotak Mahindra Bank",
-   bank_code: "KKBK",
-   branch: "GURGAON",
-   city: "GURGAON",
-   contact: "4131000",
-   district: "GURGAON",
-   ifsc: "KKBK0000261",
-   rtgs: true,
-   state: "HARYANA"
- }}
+// todo: change funcs not required to lower case.
 
-iex> IFSC.get("foobar")
-{:error, :invalid_ifsc}
-```
+func main() {
 
-Offline validation
+	ifsc.Validate("KKBK0000261") // Returns true
+	ifsc.Validate("BOTM0XEEMRA") // Returns false
 
-```elixir
-iex> IFSC.validate("KKBK0000261")
-{:ok,
- %Razorpay.IFSC{
-   address: nil,
-   bank: "Kotak Mahindra Bank",
-   bank_code: "KKBK",
-   branch: nil,
-   city: nil,
-   contact: nil,
-   district: nil,
-   ifsc: "KKBK0000261",
-   rtgs: nil,
-   state: nil
- }}
+	ifsc.ValidateBankCode("PUNB") // Returns true
+	ifsc.ValidateBankCode("ABCD") // Returns false
 
-iex> IFSC.validate("foobar")
-{:error, :invalid_format}
+	ifsc.GetBankName("PUNB") // Returns "Punjab National Bank", nil
+	ifsc.GetBankName("ABCD") // Returns "", errors.New(invalid bank code)
+	ifsc.GetBankName(ifsc.HDFC) // Returns "HDFC Bank", nil
 
-iex> IFSC.validate("AAAA0000000")
-{:error, :invalid_bank_code}
 
-iex(> IFSC.validate("HDFC0000000")
-{:error, :invalid_branch_code}
+	ifsc.GetBankDetails("PUNB")
+	// or
+	ifsc.GetBankDetails(ifsc.PUNB)
+
+	/* Returns
+		(*ifsc.Bank){
+		Name	  : "Punjab National Bank",
+		BankCode  : "024",
+		Code	  : "PUNB",
+		Type	  : "PSB",
+		IFSC	  : "PUNB0244200",
+		MICR      : "110024001",
+		IIN       : "508568",
+		APBS      : true,
+		AchCredit : true,
+		AchDebit  : true,
+		NachDebit : true,
+		Upi       : true
+	}), nil
+	*/
+
+	ifsc.LookUP("KKBK0000261")
+
+	/*
+	Returns
+	(*ifsc.IFSCResponse)({
+	 Bank	  :  "Kotak Mahindra Bank",
+	 Branch	  :  "GURGAON",
+	 Address  :  "KOTAK MAHINDRA BANK LTD. UNIT NO. 8&9, SEWA CORPORATE PARK, MG ROAD, REVENUE STATE OF SARHAUL TEHSIL, DISTT,- GURGAON- 122001",
+	 Contact  :  "4131000",
+	 City	  :  "GURGAON",
+	 District :  "GURGAON",
+	 State	  :  "HARYANA",
+	 IFSC	  :  "KKBK0000261",
+	 BankCode :  "KKBK"
+	}), nil
+	 */
+}
+
 ```
 
 ### Code Notes
@@ -356,6 +432,5 @@ is under public domain.
 
 [combined]: https://rbidocs.rbi.org.in/rdocs/content/docs/68774.xlsx
 [releases]: https://github.com/razorpay/ifsc/releases
-[buildlist]: https://app.wercker.com/razorpay/ifsc/runs?view=runs&q=pipeline%3Abuild
 [rtgs]: https://rbidocs.rbi.org.in/rdocs/RTGS/DOCs/RTGEB0815.xlsx
 [ach]: https://www.npci.org.in/what-we-do/nach/live-members/live-banks

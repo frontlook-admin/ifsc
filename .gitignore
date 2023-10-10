@@ -1,5 +1,4 @@
 scraper/scripts/sheets/
-scraper/scripts/*.html
 scraper/scripts/nach.json
 scraper/scripts/excel_list.txt
 scraper/scripts/data/
@@ -41,7 +40,17 @@ mix.lock
 .yardoc
 Gemfile.lock
 InstalledFiles
-.wercker
 
 # One-off scripts
 *.php
+tmp/
+
+# Code coverage reports
+*.cov
+
+# IDE files
+.idea/*
+
+# Temp files
+.*~
+

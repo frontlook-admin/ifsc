@@ -14,34 +14,34 @@ class Name extends TestCase
     }
 
     public function testBankDetails() {
-        $this->assertSame([
+        $this->assertEqualsCanonicalizing([
             'code' => 'PUNB',
-            'type' => 'PSB',
             'ifsc' => 'PUNB0244200',
             'micr' => '110024001',
             'iin' => '508568',
-            'apbs' => true,
             'ach_credit' => true,
             'ach_debit' => true,
+            'apbs' => true,
             'nach_debit' => true,
+            'type' => 'PSB',
             'upi' => true,
             'name' => 'Punjab National Bank',
             'bank_code' => '024',
         ], Bank::getDetails('PUNB'));
 
-        $this->assertSame([
+        $this->assertEqualsCanonicalizing([
             'code' => 'FINO',
-            'type' => 'PB',
             'ifsc' => 'FINO0000001',
-            'micr' => null,
+            'micr' => '990099909',
             'iin' => '608001',
-            'apbs' => true,
             'ach_credit' => true,
             'ach_debit' => false,
             'nach_debit' => false,
+            'apbs' => true,
+            'type' => 'PB',
             'upi' => true,
             'name' => 'Fino Payments Bank',
-            'bank_code' => null
+            'bank_code' => '099'
         ], Bank::getDetails('FINO'));
     }
 }

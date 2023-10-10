@@ -26,20 +26,39 @@ class DatasetTest extends TestCase
         'CITY',
         'NEFT',
         'MICR',
-        'UPI'
+        'UPI',
+        'ISO3166'
     ];
 
     public function testIFSCDotCsv() {
-        $file = __DIR__ . "../../scraper/scripts/data/IFSC.csv";
-        if(file_exists($file)) {
-            $line = fgets(fopen($file, 'r'));
+        $fileName = __DIR__ . "/../../scraper/scripts/data/IFSC.csv";
+        if(file_exists($fileName) or getenv('RUN_DATASET_TESTS')) {
+            $file = fopen($fileName, 'r');
+            $line = fgets($file);
             $row = str_getcsv($line);
             foreach (self::KNOWN_FIELDS as $field) {
-                $this->assertContains($field, $row, "$row missing in IFSC.csv");
+                $this->assertContains($field, $row, "$field missing in IFSC.csv");
+            }
+
+            $expectedCount = count($row);
+
+            $bankNameIndex = array_search('BANK', $row);
+            $iso3166Index = array_search('ISO3166', $row);
+            $micrIndex = array_search('MICR', $row);
+
+            $lineno = 2;
+
+            while($line = fgets($file)) {
+                $row = str_getcsv($line);
+                $this->assertCount($expectedCount, $row, "IFSC.csv L$lineno missing fields: $line");
+                $this->assertNotEmpty($row[$bankNameIndex], "IFSC.csv L$lineno has empty bankname $line");
+                $this->assertNotEmpty($row[$iso3166Index], "IFSC.csv L$lineno has empty ISO3166 code");
+                $this->assertNotEquals('NA', $row[$micrIndex], "IFSC.csv L$lineno has MICR set to NA $line");
+                $lineno++;
             }
         }
         else {
-            $this->markTestSkipped("IFSC.csv missing. This should not be skipped in CI");
+            $this->markTestSkipped("IFSC.csv missing");
         }
     }
 
@@ -50,23 +69,25 @@ class DatasetTest extends TestCase
     public function testBankFiles() {
         $tarFile = __DIR__ . "/../../scraper/scripts/data/by-bank.tar";
 
-        $dir = tempnam(sys_get_temp_dir(), '') . '.dir';
+        if (file_exists($tarFile) or getenv('RUN_DATASET_TESTS')) {
+            $dir = tempnam(sys_get_temp_dir(), '') . '.dir';
 
-        mkdir($dir);
+            // unarchive from the tar
+            $phar = new PharData($tarFile);
+            $phar->extractTo($dir, null, true);
 
-        // unarchive from the tar
-        $phar = new PharData($tarFile);
-        $phar->extractTo($dir);
-
-        foreach(glob("$dir/by-bank/*.json") as $json) {
-            $data = json_decode(file_get_contents($json), true);
-            foreach ($data as $row) {
-                $ifsc = $row['IFSC'];
-                $fields = array_keys($row);
-                foreach (self::KNOWN_FIELDS as $field) {
-                    $this->assertContains($field, $fields, "$ifsc missing $field in $json");
+            foreach(glob("$dir/by-bank/*.json") as $json) {
+                $data = json_decode(file_get_contents($json), true);
+                foreach ($data as $row) {
+                    $ifsc = $row['IFSC'];
+                    $fields = array_keys($row);
+                    foreach (self::KNOWN_FIELDS as $field) {
+                        $this->assertContains($field, $fields, "$ifsc missing $field in $json");
+                    }
                 }
             }
+        } else {
+            $this->markTestSkipped("by-bank.tar missing");
         }
     }
 }

@@ -16,6 +16,7 @@ foreach(file('ifsc-api/diff.txt') as $row) {
 $common = array_intersect($plus, $minus);
 $plus = array_diff($plus, $common);
 $minus = array_diff($minus, $common);
+
 $summary = [];
 
 foreach ($plus as $ifsc){
@@ -26,6 +27,7 @@ foreach ($plus as $ifsc){
     $summary[$bank] +=1;
 }
 foreach ($minus as $ifsc) {
+    $bank = substr($ifsc, 0, 4);
     if(!isset($summary[$bank])) {
         $summary[$bank] = 0;
     }
@@ -38,7 +40,7 @@ sort($plus);sort($minus);
 $diffSize = count($plus) + count($minus);
 
 // Reduce one for the final newline
-$ifscCount = (((int) `wc -l data/IFSC.csv`) - 1);
+$ifscCount = (((int) `wc -l data/IFSC.csv`) - 1);  // nosemgrep : php.lang.security.backticks-use.backticks-use
 ?>**IFSC Count**: <?=$ifscCount;?>
 
 **Diff Size**: <?=$diffSize?> (This only counts new or deleted IFSCs from previous release)

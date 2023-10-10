@@ -52,7 +52,7 @@ class CoverageTest extends TestCase
     {
         $failures = [];
         // For some reason the CSV header is picked up as a IFSC code
-        // Skip the check while this is fixed.
+        // TODO: Skip the check while this is fixed.
         $exceptions = ['IFSC'];
 
         foreach ($this->bankCodes as $code)
@@ -107,6 +107,35 @@ class CoverageTest extends TestCase
 
             $this->assertNotNull(IFSC::getBankName($innerCode), "Name missing for $innerCode");
         }
+    }
+
+    public function testAllBanksHaveValidType()
+    {
+        $validBankTypes = [
+            'DCCB',
+            'Foreign',
+            'LAB',
+            'O-UCB',
+            'PB',
+            'Private',
+            'PSB',
+            'RRB',
+            'SCB',
+            'SFB',
+            'S-UCB',
+        ];
+
+        $invalidBanks = [];
+
+        foreach ($this->bankList as $code => $details)
+        {
+            if(!isset($details['type']) || !in_array($details['type'], $validBankTypes))
+            {
+                $invalidBanks []= $code;
+            }
+        }
+
+        $this->assertSame($invalidBanks, [], "Invalid `type` in src/banks.json for these banks. Please add these in the corresponding src/patches/type*.yml files");
     }
 
     /**

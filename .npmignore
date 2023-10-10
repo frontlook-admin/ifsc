@@ -35,3 +35,8 @@ src/patches/*
 tests/
 tmp/
 *.csv
+.github/*
+src/go
+go.*
+*.cov
+Makefile

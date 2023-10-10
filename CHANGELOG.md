@@ -5,6 +5,163 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [UNRELEASED][unreleased]
 
+## [2.0.19][2.0.19]
+### Changed
+- Metadata updates
+
+## [2.0.18][2.0.18]
+### Changed
+- Metadata updates
+
+## [2.0.17][2.0.17]
+### Changed
+- Metadata updates
+
+## [2.0.16][2.0.16]
+### Changed
+- Metadata updates
+- Automated SDK Releases
+- Added Documentation
+
+## [2.0.14][2.0.14]
+### Changed
+- Metadata updates
+
+## [2.0.13][2.0.13]
+### Changed
+- Metadata updates
+
+## [2.0.12][2.0.12]
+### Changed
+- Metadata updates
+
+## [2.0.11][2.0.11]
+### Changed
+- Metadata updates
+
+## [2.0.10][2.0.10]
+
+### Changed
+- Metadata Updates
+
+## [2.0.9][2.0.9]
+### Changed
+- Updates on list of UPI enabled banks
+```diff
++ABSB Abhinav Sahakari Bank
++AJKB Akola Janata Commercial Co-operative Bank
++APRR A.P. Raja Rajeswari Mahila Co-operative Urban Bank
++BDBX Bellary District Co-operative Central Bank
++BHCX Bhuj Commercial Co-operative Bank
++BMCB Bombay Mercantile Co-operative Bank
+-CGBX Chhattisgarh Rajya Gramin Bank
++CRGB Chhattisgarh Rajya Gramin Bank
++FINX Financial Co-operative Bank
++GUNX Guntur Co-operative Urban Bank
++JONX Jodhpur Nagrik Sahakari Bank
++MCUX Mahaveer Co-operative Urban Bank
+-MMMX Mahila Nagrik Sahakari Bank Maryadit Mahasamund
+-MSOX Manorama Co-operative Bank Solapur
++MSSX Merchants Souharda Sahakara Bank Niyamitha
++SWSX Shree Warana Sahakari Bank
++TKTX Kottakkal Co-operative Urban Bank
++UCBX Urban Co-operative Bank Bareilly
++VADX Valsad District Central Co-operative Bank
++VASJ Vasai Janata Sahakari Bank
+-VJSX Vasai Janata Sahakari Bank
++COMX Co-operative Bank of Mehsana
+```
+- Metadata Updates
+- Dependency Updates
+
+## [2.0.8][2.0.8]
+### Changed
+- Metadata updates
+
+## [2.0.7][2.0.7]
+### Changed
+- Dependency Updates
+- Updated metadata
+- All constant files are now automatically generated
+- `IXXX` as custom bank code for "Indrayani Co-operative Bank"
+- NPCI does not publish bank type any more, so these are now maintained in this repository as patches
+- Minor bank name updates
+- Support for Go 1.18
+- New field added: `ISO3166` (`IN-XX`, as per the ISO-3166 specification).
+
+## [2.0.6][2.0.6]
+### Changed
+- Updated Metadata
+
+## [2.0.5][2.0.5]
+### Changed
+- Updated Metadata
+
+## [2.0.4][2.0.4]
+### Changed
+- Update IFSC.json for the below 20 IFSC codes
+
+## [2.0.3][2.0.3]
+### Changed
+- Adds back 20 IFSC codes removed due to a change on the RBI sheet structure in 2.0.2
+
+## [2.0.2][2.0.2]
+### Changed
+- Metadata changes
+
+## [2.0.1][2.0.1]
+### Changed
+- Metadata changes
+
+## [2.0.0][2.0.0]
+### Removed
+- Removed support for Elixir package
+### Changed
+- Builds are now powered by GitHub Actions, instead of Wercker
+### Added
+- There is a supported golang SDK. See the README for instructions on how to use it.
+- 1 New Bank: `"AHDC": "Ahmednagar District Central Co-operative Bank"`
+
+## [1.6.1][1.6.1]
+### Added
+- Only metadata changes in this release.
+- 2 new banks
+    - RDCB: Rajnandgaon District Central Co Operative Bank
+    - TMSB: The Malad Sahakari Bank Ltd
+## [1.6.0][1.6.0]
+- Support PHP8
+- Fix for some invalid IFSCs being marked as valid. Ex: `PUNB0000000` (#229)
+- Update list of UPI enabled banks
+- Fix all exported datasets to include correct bank name.
+- Only use validated MICR codes
+
+## [1.5.13][1.5.13]
+- [upi] Vijaya Bank and Dena Gujarat Gramin Bank are no more
+- [upi] 7 new banks now support UPI
+- Metadata update for new release
+- Sanitizes most text fields to remove special characters that show up from encoding errors. Fixes #29, #32
+- Start parsing contact numbers from NEFT sheet as well. Published in E.164 wherever possible
+- Changes some empty fields to null instead of "NA"
+
+## [1.5.12][1.5.12]
+
+- Only metadata changes in this release.
+- Data corrections to account for broken alignment in RBI's RTGS spreadsheet
+- Improved support for Contact details that are sourced from RTGS dataset. CONTACT details are returned in E.164 format
+
+## [1.5.11][1.5.11]
+### Changed
+- Metadata updates
+
+## [1.5.10][1.5.10]
+### Changed
+- 2 new banks:
+  - ARBL: Arvind Sahakari Bank
+  - TNCB: Nawanagar Co-operative Bank
+- Name for STCB changed from "State Bank of Mauritius" to "SBM Bank"
+- Temporary code added for "Sri Rama Co-operative Bank": `SXXX`
+- Support for ICLL (Indian Clearing Corporation) added. `ICLL0000001` is the branch.
+
 ## [1.5.9][1.5.9]
 ### Added
 - Initial support for SWIFT mappings. Only SBI and PNB branches are currently supported, and accuracy is not guaranteed. Feedback is welcome.
@@ -170,8 +327,25 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 -   Removes some data formats (YAML/Large JSON) for cleaner code. If you were using them, please let create an issue.
 
-[unreleased]: https://github.com/razorpay/ifsc/compare/1.5.8...HEAD
-[1.5.8]: https://github.com/razorpay/ifsc/releases/tag/1.5.9
+[unreleased]: https://github.com/razorpay/ifsc/compare/2.0.10...HEAD
+[2.0.10]: https://github.com/razorpay/ifsc/releases/tag/2.0.10
+[2.0.9]: https://github.com/razorpay/ifsc/releases/tag/2.0.9
+[2.0.8]: https://github.com/razorpay/ifsc/releases/tag/2.0.8
+[2.0.7]: https://github.com/razorpay/ifsc/releases/tag/2.0.7
+[2.0.6]: https://github.com/razorpay/ifsc/releases/tag/2.0.6
+[2.0.5]: https://github.com/razorpay/ifsc/releases/tag/2.0.5
+[2.0.4]: https://github.com/razorpay/ifsc/releases/tag/2.0.4
+[2.0.3]: https://github.com/razorpay/ifsc/releases/tag/2.0.3
+[2.0.2]: https://github.com/razorpay/ifsc/releases/tag/2.0.2
+[2.0.1]: https://github.com/razorpay/ifsc/releases/tag/2.0.1
+[2.0.0]: https://github.com/razorpay/ifsc/releases/tag/2.0.0
+[1.6.1]: https://github.com/razorpay/ifsc/releases/tag/1.6.1
+[1.5.13]: https://github.com/razorpay/ifsc/releases/tag/1.5.13
+[1.5.12]: https://github.com/razorpay/ifsc/releases/tag/1.5.12
+[1.5.11]: https://github.com/razorpay/ifsc/releases/tag/1.5.11
+[1.5.10]: https://github.com/razorpay/ifsc/releases/tag/1.5.10
+[1.5.9]: https://github.com/razorpay/ifsc/releases/tag/1.5.9
+[1.5.8]: https://github.com/razorpay/ifsc/releases/tag/1.5.8
 [1.5.7]: https://github.com/razorpay/ifsc/releases/tag/1.5.7
 [1.5.6]: https://github.com/razorpay/ifsc/releases/tag/1.5.6
 [1.4.10]: https://github.com/razorpay/ifsc/releases/tag/1.4.10
